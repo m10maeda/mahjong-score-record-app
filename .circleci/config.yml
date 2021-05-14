@@ -1,0 +1,72 @@
+version: 2.1
+
+executors:
+  default:
+    docker:
+      - image: circleci/node:14.15
+
+commands:
+  resolve-dependencies:
+    steps:
+      - restore_cache:
+          keys:
+            - v1-yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
+            - v1-yarn-packages-{{ .Branch }}-
+            - v1-yarn-packages-
+
+      - run:
+          name: Install Dependencies
+          command: yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
+
+      - save_cache:
+          key: v1-yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+
+jobs:
+  lint:
+    executor: default
+
+    steps:
+      - checkout
+
+      - resolve-dependencies
+
+      - run:
+          name: Run ESLint
+          command: yarn eslint --format junit --output-file ./reports/junit/eslint-results.xml
+
+      - store_test_results:
+          path: ./reports/junit
+
+  test:
+    executor: default
+
+    steps:
+      - checkout
+
+      - resolve-dependencies
+
+      - run:
+          name: Run Test
+          command: yarn test --ci --coverage --testResultsProcessor=jest-junit
+          environment:
+            JEST_JUNIT_OUTPUT_DIR: ./reports/junit
+            JEST_JUNIT_OUTPUT_NAME: test-results.xml
+
+      - store_test_results:
+          path: ./reports/junit
+
+      - store_artifacts:
+          path: ./coverage
+
+workflows:
+  version: 2
+
+  main:
+    jobs:
+      - lint
+
+      - test:
+          requires:
+            - lint
