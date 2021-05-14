@@ -10,7 +10,15 @@
     "@types/node": "^12.0.0",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
+    "@typescript-eslint/eslint-plugin": "^4.23.0",
+    "@typescript-eslint/parser": "^4.23.0",
+    "eslint": "^7.2.0",
+    "eslint-config-airbnb-typescript": "^12.3.1",
     "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^4",
     "husky": "^6.0.0",
     "lint-staged": "^11.0.0",
     "prettier": "^2.3.0",
@@ -38,10 +46,13 @@
   },
   "eslintConfig": {
     "extends": [
-      "react-app",
-      "react-app/jest",
+      "airbnb-typescript",
+      "airbnb/hooks",
       "prettier"
-    ]
+    ],
+    "parserOptions": {
+      "project": "./tsconfig.json"
+    }
   },
   "browserslist": {
     "production": [
