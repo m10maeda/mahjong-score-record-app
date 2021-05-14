@@ -5,6 +5,24 @@ executors:
     docker:
       - image: circleci/node:14.15
 
+commands:
+  resolve-dependencies:
+    steps:
+      - restore_cache:
+          keys:
+            - v1-yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
+            - v1-yarn-packages-{{ .Branch }}-
+            - v1-yarn-packages-
+
+      - run:
+          name: Install Dependencies
+          command: yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
+
+      - save_cache:
+          key: v1-yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+
 jobs:
   lint:
     executor: default
