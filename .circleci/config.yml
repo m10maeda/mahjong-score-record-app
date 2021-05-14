@@ -28,9 +28,16 @@ jobs:
     executor: default
 
     steps:
+      - checkout
+
+      - resolve-dependencies
+
       - run:
-          name: Run Lint
-          command: echo Lint
+          name: Run ESLint
+          command: yarn eslint --format junit --output-file ./reports/junit/eslint-results.xml
+
+      - store_test_results:
+          path: ./reports/junit
 
   test:
     executor: default
