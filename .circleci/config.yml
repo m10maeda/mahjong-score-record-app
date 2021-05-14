@@ -1,0 +1,34 @@
+version: 2.1
+
+executors:
+  default:
+    docker:
+      - image: circleci/node:14.15
+
+jobs:
+  lint:
+    executor: default
+
+    steps:
+      - run:
+          name: Run Lint
+          command: echo Lint
+
+  test:
+    executor: default
+
+    steps:
+      - run:
+          name: Run Test
+          command: echo Test
+
+workflows:
+  version: 2
+
+  main:
+    jobs:
+      - lint
+
+      - test:
+          requires:
+            - lint
