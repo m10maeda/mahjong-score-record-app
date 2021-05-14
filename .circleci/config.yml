@@ -43,9 +43,22 @@ jobs:
     executor: default
 
     steps:
+      - checkout
+
+      - resolve-dependencies
+
       - run:
           name: Run Test
-          command: echo Test
+          command: yarn test --ci --coverage --testResultsProcessor=jest-junit
+          environment:
+            JEST_JUNIT_OUTPUT_DIR: ./reports/junit
+            JEST_JUNIT_OUTPUT_NAME: test-results.xml
+
+      - store_test_results:
+          path: ./reports/junit
+
+      - store_artifacts:
+          path: ./coverage
 
 workflows:
   version: 2
