@@ -1,2 +1,2 @@
-// eslint-disable-next-line import/prefer-default-export
 export { default as PlayersRuleId } from './PlayersRuleId';
+export { default as PlayersRuleType } from './PlayersRuleType';
