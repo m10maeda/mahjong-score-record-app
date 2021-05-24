@@ -1,3 +1,4 @@
+export * from './IPlayerFactory';
 export { default as Player } from './Player';
 export { default as PlayerCount } from './PlayerCount';
 export { default as PlayerId } from './PlayerId';
