@@ -1,5 +1,6 @@
 import { ReportHandler } from 'web-vitals';
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const reportWebVitals = (onPerfEntry?: ReportHandler) => {
   if (onPerfEntry && onPerfEntry instanceof Function) {
     // eslint-disable-next-line promise/catch-or-return, promise/always-return
