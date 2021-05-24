@@ -1,2 +1,2 @@
-// eslint-disable-next-line import/prefer-default-export
 export { default as PlayerId } from './PlayerId';
+export { default as PlayerName } from './PlayerName';
