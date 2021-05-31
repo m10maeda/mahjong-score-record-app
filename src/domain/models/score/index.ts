@@ -1,2 +1,2 @@
-// eslint-disable-next-line import/prefer-default-export
 export { default as ChipCount } from './ChipCount';
+export { default as Place } from './Place';
