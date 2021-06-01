@@ -40,7 +40,9 @@ export default class EntryPlayerList implements Iterable<PlayerId> {
   ): void {
     const newPlayers = this.players.remove(player.id);
     if (!minSpec.isSatisfiedBy(newPlayers)) {
-      throw new RangeError('Players must be reached PlayersRule');
+      throw new RangeError(
+        'Players must satisfies EntryPlayerListMinSpecification',
+      );
     }
 
     this.players = newPlayers;
@@ -60,7 +62,7 @@ export default class EntryPlayerList implements Iterable<PlayerId> {
 
     if (!minSpec.isSatisfiedBy(players)) {
       throw new RangeError(
-        'Players must be satisfied EntryPlayerListMinSpecification',
+        'Players must satisfies EntryPlayerListMinSpecification',
       );
     }
   }
