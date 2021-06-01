@@ -2,7 +2,7 @@ import { PlayersRuleType } from '../playersRule';
 import EntryPlayers from './EntryPlayers';
 
 export default class EntryPlayerListMinSpecification {
-  public readonly playersRuleType: PlayersRuleType;
+  private readonly playersRuleType: PlayersRuleType;
 
   public isSatisfiedBy(players: EntryPlayers): boolean {
     return this.playersRuleType.isSatisfiedBy(players.count);
