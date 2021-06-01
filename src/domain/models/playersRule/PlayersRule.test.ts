@@ -1,3 +1,4 @@
+import { PlayerCount } from '../player';
 import PlayersRule from './PlayersRule';
 import PlayersRuleId from './PlayersRuleId';
 import PlayersRuleType from './PlayersRuleType';
@@ -24,5 +25,43 @@ describe('equals メソッドが正しく比較する', () => {
     );
 
     expect(playersRule.equals(other)).toBeFalsy();
+  });
+});
+
+describe('isSatisfiedBy メソッド', () => {
+  const playersRule = new PlayersRule(
+    new PlayersRuleId('0'),
+    PlayersRuleType.FourPlayers,
+  );
+
+  test('ルールより少ない人数の場合、false を返す', () => {
+    expect(playersRule.isSatisfiedBy(new PlayerCount(3))).toBe(false);
+  });
+
+  test('ルールと同じ人数の場合、true を返す', () => {
+    expect(playersRule.isSatisfiedBy(new PlayerCount(4))).toBe(true);
+  });
+
+  test('ルールより多い人数の場合、true を返す', () => {
+    expect(playersRule.isSatisfiedBy(new PlayerCount(5))).toBe(true);
+  });
+});
+
+describe('isMatchedBy メソッド', () => {
+  const playersRule = new PlayersRule(
+    new PlayersRuleId('0'),
+    PlayersRuleType.FourPlayers,
+  );
+
+  test('ルールより少ない人数の場合、false を返す', () => {
+    expect(playersRule.isMatchedBy(new PlayerCount(3))).toBe(false);
+  });
+
+  test('ルールと同じ人数の場合、true を返す', () => {
+    expect(playersRule.isMatchedBy(new PlayerCount(4))).toBe(true);
+  });
+
+  test('ルールより多い人数の場合、false を返す', () => {
+    expect(playersRule.isMatchedBy(new PlayerCount(5))).toBe(false);
   });
 });
