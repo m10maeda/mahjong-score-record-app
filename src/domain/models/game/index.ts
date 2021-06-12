@@ -1,3 +1,4 @@
 export { default as GameId } from './GameId';
+export { default as GameScore } from './GameScore';
 export { default as PlayerScoredPoint } from './PlayerScoredPoint';
 export { default as WatchingPlayers } from './WatchingPlayers';
