@@ -1,3 +1,4 @@
+export { default as GameDetail } from './GameDetail';
 export { default as GameId } from './GameId';
 export { default as GameResult } from './GameResult';
 export { default as GameResultSizeSpecification } from './GameResultSizeSpecification';
