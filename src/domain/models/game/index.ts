@@ -1,4 +1,5 @@
 export { default as GameId } from './GameId';
+export { default as GameResult } from './GameResult';
 export { default as GameResultSizeSpecification } from './GameResultSizeSpecification';
 export { default as GameScore } from './GameScore';
 export { default as PlayerGameScore } from './PlayerGameScore';
