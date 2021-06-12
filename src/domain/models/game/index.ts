@@ -1,0 +1,9 @@
+export { default as Game } from './Game';
+export { default as GameDetail } from './GameDetail';
+export { default as GameId } from './GameId';
+export { default as GameResult } from './GameResult';
+export { default as GameResultSizeSpecification } from './GameResultSizeSpecification';
+export { default as GameScore } from './GameScore';
+export { default as PlayerGameScore } from './PlayerGameScore';
+export { default as PlayerScoredPoint } from './PlayerScoredPoint';
+export { default as WatchingPlayers } from './WatchingPlayers';
