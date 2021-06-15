@@ -30,6 +30,10 @@ export default class EntryPlayerList implements Iterable<PlayerId> {
     );
   }
 
+  public exclude(playerIds: Iterable<PlayerId>): Iterable<PlayerId> {
+    return this.players.exclude(playerIds);
+  }
+
   public add(player: Player): void {
     this.players = this.players.add(player.id);
   }

@@ -21,6 +21,13 @@ export default class EntryPlayers implements Iterable<PlayerId> {
     return Array.from(ids).every((id) => this.contains(id));
   }
 
+  public exclude(ids: Iterable<PlayerId>): EntryPlayers {
+    const excluded = Array.from(this).filter(
+      (id) => Array.from(ids).find((_id) => _id.equals(id)) === undefined,
+    );
+    return new EntryPlayers(excluded);
+  }
+
   public add(id: PlayerId): EntryPlayers {
     return new EntryPlayers([...Array.from(this), id]);
   }

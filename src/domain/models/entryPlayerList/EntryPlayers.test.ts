@@ -212,3 +212,22 @@ describe('change メソッド', () => {
     });
   });
 });
+
+describe('exclude メソッド', () => {
+  test('対象を除外した新しいオブジェクトを返す', () => {
+    const players = new EntryPlayers([
+      new PlayerId('0'),
+      new PlayerId('1'),
+      new PlayerId('2'),
+      new PlayerId('3'),
+    ]);
+    const target = [new PlayerId('1'), new PlayerId('2')];
+
+    const actual = players.exclude(target);
+
+    expect(actual.contains(new PlayerId('0'))).toBe(true);
+    expect(actual.contains(new PlayerId('1'))).toBe(false);
+    expect(actual.contains(new PlayerId('2'))).toBe(false);
+    expect(actual.contains(new PlayerId('3'))).toBe(true);
+  });
+});
