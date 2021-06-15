@@ -1,2 +1,2 @@
-// eslint-disable-next-line import/prefer-default-export
+export { default as GameResultAdjuster } from './GameResultAdjuster';
 export { default as GameResultComplementer } from './GameResultComplementer';
