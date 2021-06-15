@@ -1,16 +1,12 @@
 import { PlayerCount } from '../player';
 import { PlayersRuleType } from '../playersRule';
-import PlayerScoredPoint from './PlayerScoredPoint';
+import PlayerScoredPoints from './PlayerScoredPoints';
 
 export default class GameResultSizeSpecification {
   private readonly playersRuleType: PlayersRuleType;
 
-  public isSatisfiedBy(scores: Iterable<PlayerScoredPoint>): boolean {
-    const { size } = new Map(
-      Array.from(scores).map((score) => [score.playerId.toString(), score]),
-    );
-
-    return this.playersRuleType.isMatchedBy(new PlayerCount(size));
+  public isSatisfiedBy(scores: PlayerScoredPoints): boolean {
+    return this.playersRuleType.isMatchedBy(new PlayerCount(scores.size));
   }
 
   private constructor(playersRuleType: PlayersRuleType) {

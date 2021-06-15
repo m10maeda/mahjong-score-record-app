@@ -6,4 +6,5 @@ export { default as GameResultSizeSpecification } from './GameResultSizeSpecific
 export { default as GameScore } from './GameScore';
 export { default as PlayerGameScore } from './PlayerGameScore';
 export { default as PlayerScoredPoint } from './PlayerScoredPoint';
+export { default as PlayerScoredPoints } from './PlayerScoredPoints';
 export { default as WatchingPlayers } from './WatchingPlayers';

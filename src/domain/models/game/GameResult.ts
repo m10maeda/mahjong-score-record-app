@@ -3,15 +3,13 @@ import { Place, Point } from '../score';
 import GameResultSizeSpecification from './GameResultSizeSpecification';
 import GameScore from './GameScore';
 import PlayerGameScore from './PlayerGameScore';
-import PlayerScoredPoint from './PlayerScoredPoint';
-
-type Key = ReturnType<PlayerScoredPoint['playerId']['toString']>;
+import PlayerScoredPoints from './PlayerScoredPoints';
 
 export default class GameResult implements Iterable<PlayerGameScore> {
-  private readonly scores: Map<Key, PlayerScoredPoint>;
+  private readonly scores: PlayerScoredPoints;
 
   public get scoredPlayerIds(): Iterable<PlayerId> {
-    return Array.from(this.scores.values()).map((score) => score.playerId);
+    return this.scores.scoredPlayerIds;
   }
 
   public getPlayerGameScoreBy(playerId: PlayerId): PlayerGameScore | undefined {
@@ -19,7 +17,7 @@ export default class GameResult implements Iterable<PlayerGameScore> {
   }
 
   public [Symbol.iterator](): Iterator<PlayerGameScore> {
-    return Array.from(this.scores.values())
+    return Array.from(this.scores)
       .map((score) => {
         const place = this.calcPlaceBy(score.playerId);
 
@@ -32,13 +30,13 @@ export default class GameResult implements Iterable<PlayerGameScore> {
   }
 
   private calcPlaceBy(playerId: PlayerId): Place {
-    const score = this.scores.get(playerId.toString());
+    const score = this.scores.getBy(playerId);
 
     if (score === undefined) {
       throw new ReferenceError(`PlayerId(${playerId}) is not contained.`);
     }
 
-    const scores = Array.from(this.scores.values());
+    const scores = Array.from(this.scores);
     const sortedScores = scores.sort((a, b) => a.compareTo(b)).reverse();
     const index = sortedScores.findIndex((_score) =>
       _score.point.equals(score.point),
@@ -48,31 +46,19 @@ export default class GameResult implements Iterable<PlayerGameScore> {
   }
 
   public constructor(
-    scores: Iterable<PlayerScoredPoint>,
+    scores: PlayerScoredPoints,
     sizeSpec: GameResultSizeSpecification,
   ) {
-    const unduplicatedScores = new Map(
-      Array.from(scores).map((score) => [score.playerId.toString(), score]),
-    );
-
-    if (!sizeSpec.isSatisfiedBy(unduplicatedScores.values())) {
+    if (!sizeSpec.isSatisfiedBy(scores)) {
       throw new RangeError(
         'Scores must be satisfied GameResultSizeSpecification.',
       );
     }
 
-    if (!GameResult.isZeroSum(unduplicatedScores.values())) {
+    if (!scores.totalPoint.equals(new Point(0))) {
       throw new RangeError('Scores must be zero sum.');
     }
 
-    this.scores = unduplicatedScores;
-  }
-
-  private static isZeroSum(scores: Iterable<PlayerScoredPoint>): boolean {
-    const totalPoint = Array.from(scores)
-      .map((score) => score.point)
-      .reduce((a, b) => a.add(b));
-
-    return totalPoint.equals(new Point(0));
+    this.scores = scores;
   }
 }
