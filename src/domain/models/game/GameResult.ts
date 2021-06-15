@@ -1,5 +1,6 @@
 import { PlayerId } from '../player';
 import { Place, Point } from '../score';
+import GameResultCorrectionProcedure from './GameResultCorrectionProcedure';
 import GameResultSizeSpecification from './GameResultSizeSpecification';
 import GameScore from './GameScore';
 import PlayerGameScore from './PlayerGameScore';
@@ -47,18 +48,21 @@ export default class GameResult implements Iterable<PlayerGameScore> {
 
   public constructor(
     scores: PlayerScoredPoints,
+    correctionProcedure: GameResultCorrectionProcedure,
     sizeSpec: GameResultSizeSpecification,
   ) {
-    if (!sizeSpec.isSatisfiedBy(scores)) {
+    const correctedScores = correctionProcedure.correct(scores);
+
+    if (!sizeSpec.isSatisfiedBy(correctedScores)) {
       throw new RangeError(
         'Scores must be satisfied GameResultSizeSpecification.',
       );
     }
 
-    if (!scores.totalPoint.equals(new Point(0))) {
+    if (!correctedScores.totalPoint.equals(new Point(0))) {
       throw new RangeError('Scores must be zero sum.');
     }
 
-    this.scores = scores;
+    this.scores = correctedScores;
   }
 }
