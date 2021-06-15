@@ -1,28 +1,24 @@
-import { PlayerGameScore } from '.';
+import {
+  EntryPlayerList,
+  EntryPlayerListId,
+  EntryPlayerListMinSpecification,
+  EntryPlayers,
+} from '../entryPlayerList';
 import { PlayerId } from '../player';
+import { PlayersRuleType } from '../playersRule';
 import { Place, Point } from '../score';
 import GameResult from './GameResult';
+import GameResultCorrectionProcedure, {
+  GameResultAdjuster,
+  GameResultComplementer,
+} from './GameResultCorrectionProcedure';
 import GameResultSizeSpecification from './GameResultSizeSpecification';
 import GameScore from './GameScore';
+import PlayerGameScore from './PlayerGameScore';
 import PlayerScoredPoint from './PlayerScoredPoint';
 import PlayerScoredPoints from './PlayerScoredPoints';
 
 describe('不正な値で生成しようとするとエラーを投げる', () => {
-  test('合計ポイントが 0 にならない場合', () => {
-    expect(() => {
-      // eslint-disable-next-line no-new
-      new GameResult(
-        new PlayerScoredPoints([
-          new PlayerScoredPoint(new PlayerId('0'), new Point(40)),
-          new PlayerScoredPoint(new PlayerId('1'), new Point(10)),
-          new PlayerScoredPoint(new PlayerId('2'), new Point(-10)),
-          new PlayerScoredPoint(new PlayerId('3'), new Point(-20)),
-        ]),
-        GameResultSizeSpecification.FourPlayers,
-      );
-    }).toThrowError();
-  });
-
   test('プレイ人数ルールと一致しない場合', () => {
     expect(() => {
       // eslint-disable-next-line no-new
@@ -33,6 +29,22 @@ describe('不正な値で生成しようとするとエラーを投げる', () =
           new PlayerScoredPoint(new PlayerId('2'), new Point(-10)),
           new PlayerScoredPoint(new PlayerId('3'), new Point(-20)),
         ]),
+        new GameResultCorrectionProcedure(
+          new GameResultComplementer(
+            new EntryPlayerList(
+              new EntryPlayerListId('0'),
+              new EntryPlayers([
+                new PlayerId('0'),
+                new PlayerId('1'),
+                new PlayerId('2'),
+                new PlayerId('3'),
+              ]),
+              EntryPlayerListMinSpecification.FourPlayers,
+            ),
+            PlayersRuleType.ThreePlayers,
+          ),
+          GameResultAdjuster.ThreePlayers,
+        ),
         GameResultSizeSpecification.ThreePlayers,
       );
     }).toThrowError();
@@ -47,6 +59,22 @@ describe('getPlayerGameScoreBy メソッド', () => {
       new PlayerScoredPoint(new PlayerId('2'), new Point(-10)),
       new PlayerScoredPoint(new PlayerId('3'), new Point(-20)),
     ]),
+    new GameResultCorrectionProcedure(
+      new GameResultComplementer(
+        new EntryPlayerList(
+          new EntryPlayerListId('0'),
+          new EntryPlayers([
+            new PlayerId('0'),
+            new PlayerId('1'),
+            new PlayerId('2'),
+            new PlayerId('3'),
+          ]),
+          EntryPlayerListMinSpecification.FourPlayers,
+        ),
+        PlayersRuleType.FourPlayers,
+      ),
+      GameResultAdjuster.FourPlayers,
+    ),
     GameResultSizeSpecification.FourPlayers,
   );
 
