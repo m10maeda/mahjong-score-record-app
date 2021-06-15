@@ -5,18 +5,19 @@ import GameResult from './GameResult';
 import GameResultSizeSpecification from './GameResultSizeSpecification';
 import GameScore from './GameScore';
 import PlayerScoredPoint from './PlayerScoredPoint';
+import PlayerScoredPoints from './PlayerScoredPoints';
 
 describe('不正な値で生成しようとするとエラーを投げる', () => {
   test('合計ポイントが 0 にならない場合', () => {
     expect(() => {
       // eslint-disable-next-line no-new
       new GameResult(
-        [
+        new PlayerScoredPoints([
           new PlayerScoredPoint(new PlayerId('0'), new Point(40)),
           new PlayerScoredPoint(new PlayerId('1'), new Point(10)),
           new PlayerScoredPoint(new PlayerId('2'), new Point(-10)),
           new PlayerScoredPoint(new PlayerId('3'), new Point(-20)),
-        ],
+        ]),
         GameResultSizeSpecification.FourPlayers,
       );
     }).toThrowError();
@@ -26,12 +27,12 @@ describe('不正な値で生成しようとするとエラーを投げる', () =
     expect(() => {
       // eslint-disable-next-line no-new
       new GameResult(
-        [
+        new PlayerScoredPoints([
           new PlayerScoredPoint(new PlayerId('0'), new Point(20)),
           new PlayerScoredPoint(new PlayerId('1'), new Point(10)),
           new PlayerScoredPoint(new PlayerId('2'), new Point(-10)),
           new PlayerScoredPoint(new PlayerId('3'), new Point(-20)),
-        ],
+        ]),
         GameResultSizeSpecification.ThreePlayers,
       );
     }).toThrowError();
@@ -40,12 +41,12 @@ describe('不正な値で生成しようとするとエラーを投げる', () =
 
 describe('getPlayerGameScoreBy メソッド', () => {
   const result = new GameResult(
-    [
+    new PlayerScoredPoints([
       new PlayerScoredPoint(new PlayerId('0'), new Point(20)),
       new PlayerScoredPoint(new PlayerId('1'), new Point(10)),
       new PlayerScoredPoint(new PlayerId('2'), new Point(-10)),
       new PlayerScoredPoint(new PlayerId('3'), new Point(-20)),
-    ],
+    ]),
     GameResultSizeSpecification.FourPlayers,
   );
 
