@@ -8,6 +8,8 @@ export default class EntryPlayerList implements Iterable<PlayerId> {
 
   private players: EntryPlayers;
 
+  private readonly minSpec: EntryPlayerListMinSpecification;
+
   public get count(): PlayerCount {
     return this.players.count;
   }
@@ -38,12 +40,9 @@ export default class EntryPlayerList implements Iterable<PlayerId> {
     this.players = this.players.add(player.id);
   }
 
-  public remove(
-    player: Player,
-    minSpec: EntryPlayerListMinSpecification,
-  ): void {
+  public remove(player: Player): void {
     const newPlayers = this.players.remove(player.id);
-    if (!minSpec.isSatisfiedBy(newPlayers)) {
+    if (!this.minSpec.isSatisfiedBy(newPlayers)) {
       throw new RangeError(
         'Players must satisfies EntryPlayerListMinSpecification',
       );
@@ -69,5 +68,6 @@ export default class EntryPlayerList implements Iterable<PlayerId> {
 
     this.id = id;
     this.players = players;
+    this.minSpec = minSpec;
   }
 }
