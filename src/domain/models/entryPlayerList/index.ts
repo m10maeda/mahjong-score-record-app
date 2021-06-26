@@ -5,6 +5,7 @@ export {
   EntryPlayerListEvent,
   RemovedPlayerEvent,
 } from './EntryPlayerListEvent';
+export type { IEntryPlayerListEventSubscriber } from './EntryPlayerListEvent';
 export { default as EntryPlayerListId } from './EntryPlayerListId';
 export { default as EntryPlayerListMinSpecification } from './EntryPlayerListMinSpecification';
 export { default as EntryPlayers } from './EntryPlayers';
