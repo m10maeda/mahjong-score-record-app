@@ -1,5 +1,6 @@
 export { default as EntryPlayerList } from './EntryPlayerList';
 export {
+  ChangedPlayerEvent,
   EntriedPlayerEvent,
   EntryPlayerListEvent,
   RemovedPlayerEvent,
