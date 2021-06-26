@@ -3,6 +3,7 @@ export {
   ChangedPlayerEvent,
   EntriedPlayerEvent,
   EntryPlayerListEvent,
+  EntryPlayerListEventPublisher,
   RemovedPlayerEvent,
 } from './EntryPlayerListEvent';
 export type { IEntryPlayerListEventSubscriber } from './EntryPlayerListEvent';
