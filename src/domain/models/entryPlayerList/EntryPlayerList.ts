@@ -61,13 +61,13 @@ export default class EntryPlayerList implements Iterable<PlayerId> {
     players: EntryPlayers,
     minSpec: EntryPlayerListMinSpecification,
   ) {
-    this.id = id;
-    this.players = players;
-
     if (!minSpec.isSatisfiedBy(players)) {
       throw new RangeError(
         'Players must satisfies EntryPlayerListMinSpecification',
       );
     }
+
+    this.id = id;
+    this.players = players;
   }
 }
