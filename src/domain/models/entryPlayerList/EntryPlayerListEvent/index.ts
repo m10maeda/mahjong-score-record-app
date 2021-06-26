@@ -1,2 +1,2 @@
-// eslint-disable-next-line import/prefer-default-export
+export { default as EntriedPlayerEvent } from './EntriedPlayerEvent';
 export { default as EntryPlayerListEvent } from './EntryPlayerListEvent';
