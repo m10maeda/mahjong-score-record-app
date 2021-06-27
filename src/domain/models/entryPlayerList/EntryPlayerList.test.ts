@@ -198,7 +198,7 @@ describe('remove メソッド', () => {
     );
 
     const target = new Player(new PlayerId('1'), new PlayerName('Bob'));
-    entryPlayerList.remove(target, minSpec);
+    entryPlayerList.remove(target);
 
     expect(
       entryPlayerList.count.equals(new PlayerCount(values.length - 1)),
@@ -227,7 +227,7 @@ describe('remove メソッド', () => {
     const target = new Player(new PlayerId('1'), new PlayerName('Bob'));
 
     expect(() => {
-      entryPlayerList.remove(target, minSpec);
+      entryPlayerList.remove(target);
     }).toThrowError();
   });
 });
