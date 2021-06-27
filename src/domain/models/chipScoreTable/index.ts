@@ -1,6 +1,5 @@
 export { default as ChipScoreTable } from './ChipScoreTable';
 export { default as ChipScoreTableId } from './ChipScoreTableId';
-export { default as ChipScoreTableMinSpecification } from './ChipScoreTableMinSpecification';
 export { default as ChipScoreTableSpecification } from './ChipScoreTableSpecification';
 export * from './IChipScoreTableFactory';
 export * from './IChipScoreTableRepository';
