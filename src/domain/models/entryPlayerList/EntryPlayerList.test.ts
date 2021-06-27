@@ -1,5 +1,6 @@
 import { Player, PlayerCount, PlayerId, PlayerName } from '../player';
 import EntryPlayerList from './EntryPlayerList';
+import { EntryPlayerListEventPublisher } from './EntryPlayerListEvent';
 import EntryPlayerListId from './EntryPlayerListId';
 import EntryPlayerListMinSpecification from './EntryPlayerListMinSpecification';
 import EntryPlayers from './EntryPlayers';
@@ -13,7 +14,8 @@ test('count プロパティが期待した値を返す', () => {
     new PlayerId('3'),
   ]);
   const minSpec = EntryPlayerListMinSpecification.ThreePlayers;
-  const entryPlayerList = new EntryPlayerList(id, players, minSpec);
+  const publisher = new EntryPlayerListEventPublisher();
+  const entryPlayerList = new EntryPlayerList(id, players, minSpec, publisher);
 
   const actual = entryPlayerList.count.equals(players.count);
 
@@ -30,9 +32,10 @@ describe('不正な値で生成しようとするとエラーを投げる', () =
         new PlayerId('2'),
       ]);
       const minSpec = EntryPlayerListMinSpecification.FourPlayers;
+      const publisher = new EntryPlayerListEventPublisher();
 
       // eslint-disable-next-line no-new
-      new EntryPlayerList(id, players, minSpec);
+      new EntryPlayerList(id, players, minSpec, publisher);
     }).toThrowError();
   });
 });
@@ -46,8 +49,9 @@ describe('equals メソッドが正しく比較する', () => {
     new PlayerId('3'),
   ]);
   const minSpec = EntryPlayerListMinSpecification.FourPlayers;
+  const publisher = new EntryPlayerListEventPublisher();
 
-  const entryPlayerList = new EntryPlayerList(id, players, minSpec);
+  const entryPlayerList = new EntryPlayerList(id, players, minSpec, publisher);
 
   test('ID が同一の場合、true を返す', () => {
     const otherId = new EntryPlayerListId('0');
@@ -58,7 +62,12 @@ describe('equals メソッドが正しく比較する', () => {
       new PlayerId('13'),
     ]);
     const otherMinSpec = EntryPlayerListMinSpecification.FourPlayers;
-    const other = new EntryPlayerList(otherId, otherPlayers, otherMinSpec);
+    const other = new EntryPlayerList(
+      otherId,
+      otherPlayers,
+      otherMinSpec,
+      publisher,
+    );
 
     expect(id.equals(otherId)).toBe(true);
     expect(entryPlayerList.equals(other)).toBe(true);
@@ -73,7 +82,12 @@ describe('equals メソッドが正しく比較する', () => {
       new PlayerId('3'),
     ]);
     const otherMinSpec = EntryPlayerListMinSpecification.FourPlayers;
-    const other = new EntryPlayerList(otherId, otherPlayers, otherMinSpec);
+    const other = new EntryPlayerList(
+      otherId,
+      otherPlayers,
+      otherMinSpec,
+      publisher,
+    );
 
     expect(id.equals(otherId)).toBe(false);
     expect(entryPlayerList.equals(other)).toBe(false);
@@ -89,8 +103,9 @@ describe('contains メソッド', () => {
     new PlayerId('3'),
   ]);
   const minSpec = EntryPlayerListMinSpecification.FourPlayers;
+  const publisher = new EntryPlayerListEventPublisher();
 
-  const entryPlayerList = new EntryPlayerList(id, players, minSpec);
+  const entryPlayerList = new EntryPlayerList(id, players, minSpec, publisher);
 
   test('対象の要素を保持している場合、true を返す', () => {
     const target = new Player(new PlayerId('0'), new PlayerName('Alice'));
@@ -114,8 +129,9 @@ describe('containsAll メソッド', () => {
     new PlayerId('3'),
   ]);
   const minSpec = EntryPlayerListMinSpecification.FourPlayers;
+  const publisher = new EntryPlayerListEventPublisher();
 
-  const entryPlayerList = new EntryPlayerList(id, players, minSpec);
+  const entryPlayerList = new EntryPlayerList(id, players, minSpec, publisher);
 
   test('対象の要素をすべて保持している場合、true を返す', () => {
     const targets = [
@@ -146,7 +162,9 @@ test('add メソッドが指定した要素を追加している', () => {
   ];
   const players = new EntryPlayers(values);
   const minSpec = EntryPlayerListMinSpecification.FourPlayers;
-  const entryPlayerList = new EntryPlayerList(id, players, minSpec);
+  const publisher = new EntryPlayerListEventPublisher();
+
+  const entryPlayerList = new EntryPlayerList(id, players, minSpec, publisher);
 
   const target = new Player(new PlayerId('4'), new PlayerName('Ellen'));
   entryPlayerList.add(target);
@@ -170,8 +188,14 @@ describe('remove メソッド', () => {
     ];
     const players = new EntryPlayers(values);
     const minSpec = EntryPlayerListMinSpecification.FourPlayers;
+    const publisher = new EntryPlayerListEventPublisher();
 
-    const entryPlayerList = new EntryPlayerList(id, players, minSpec);
+    const entryPlayerList = new EntryPlayerList(
+      id,
+      players,
+      minSpec,
+      publisher,
+    );
 
     const target = new Player(new PlayerId('1'), new PlayerName('Bob'));
     entryPlayerList.remove(target);
@@ -191,7 +215,14 @@ describe('remove メソッド', () => {
     ];
     const players = new EntryPlayers(values);
     const minSpec = EntryPlayerListMinSpecification.FourPlayers;
-    const entryPlayerList = new EntryPlayerList(id, players, minSpec);
+    const publisher = new EntryPlayerListEventPublisher();
+
+    const entryPlayerList = new EntryPlayerList(
+      id,
+      players,
+      minSpec,
+      publisher,
+    );
 
     const target = new Player(new PlayerId('1'), new PlayerName('Bob'));
 
@@ -211,9 +242,15 @@ describe('change メソッド', () => {
   ];
   const players = new EntryPlayers(values);
   const minSpec = EntryPlayerListMinSpecification.FourPlayers;
+  const publisher = new EntryPlayerListEventPublisher();
 
   test('入れ替え対象の要素を保持している場合、入れ替え対象の要素を入れ替える', () => {
-    const entryPlayerList = new EntryPlayerList(id, players, minSpec);
+    const entryPlayerList = new EntryPlayerList(
+      id,
+      players,
+      minSpec,
+      publisher,
+    );
     const from = new Player(new PlayerId('1'), new PlayerName('Bob'));
     const to = new Player(new PlayerId('4'), new PlayerName('Ellen'));
 
@@ -227,7 +264,12 @@ describe('change メソッド', () => {
   });
 
   test('入れ替え対象の要素を保持していない場合、変更が起きない', () => {
-    const entryPlayerList = new EntryPlayerList(id, players, minSpec);
+    const entryPlayerList = new EntryPlayerList(
+      id,
+      players,
+      minSpec,
+      publisher,
+    );
     const from = new Player(new PlayerId('unknwon'), new PlayerName('Alice'));
     const to = new Player(new PlayerId('4'), new PlayerName('Ellen'));
 

@@ -1,5 +1,6 @@
 import {
   EntryPlayerList,
+  EntryPlayerListEventPublisher,
   EntryPlayerListId,
   EntryPlayerListMinSpecification,
   EntryPlayers,
@@ -20,10 +21,12 @@ describe('complement メソッド', () => {
       new PlayerId('3'),
     ]);
     const minSpec = EntryPlayerListMinSpecification.FourPlayers;
+    const publisher = new EntryPlayerListEventPublisher();
     const entryPlayerList = new EntryPlayerList(
       new EntryPlayerListId('0'),
       players,
       minSpec,
+      publisher,
     );
     const complementer = new GameResultComplementer(
       entryPlayerList,
@@ -56,11 +59,12 @@ describe('complement メソッド', () => {
         new PlayerId('3'),
       ]);
       const minSpec = EntryPlayerListMinSpecification.FourPlayers;
-
+      const publisher = new EntryPlayerListEventPublisher();
       const entryPlayerList = new EntryPlayerList(
         new EntryPlayerListId('0'),
         players,
         minSpec,
+        publisher,
       );
 
       const complementer = new GameResultComplementer(
@@ -102,10 +106,12 @@ describe('complement メソッド', () => {
         new PlayerId('4'),
       ]);
       const minSpec = EntryPlayerListMinSpecification.FourPlayers;
+      const publisher = new EntryPlayerListEventPublisher();
       const entryPlayerList = new EntryPlayerList(
         new EntryPlayerListId('0'),
         players,
         minSpec,
+        publisher,
       );
       const complementer = new GameResultComplementer(
         entryPlayerList,
