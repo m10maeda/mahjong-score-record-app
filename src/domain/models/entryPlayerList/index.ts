@@ -12,3 +12,5 @@ export { default as EntryPlayerListMinSpecification } from './EntryPlayerListMin
 export { default as EntryPlayers } from './EntryPlayers';
 export * from './IEntryPlayerListFactory';
 export * from './IEntryPlayerListRepository';
+export { default as RemovableEntryPlayerSpecification } from './RemovableEntryPlayerSpecification';
+export { default as ScoredPlayers } from './ScoredPlayers';
