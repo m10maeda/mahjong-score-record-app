@@ -1,4 +1,5 @@
 import { PlayerId } from '../player';
+import { ChipCount } from '../score';
 import ChipScoreTableId from './ChipScoreTableId';
 import ChipScoreTableSpecification from './ChipScoreTableSpecification';
 import PlayerChipScore from './PlayerChipScore';
@@ -37,6 +38,10 @@ export default class ChipScoreTable implements Iterable<PlayerChipScore> {
     scores: PlayerChipScores,
     spec: ChipScoreTableSpecification,
   ) {
+    if (!scores.totalChipCount.equals(new ChipCount(0))) {
+      throw new Error(`ChipCounts must be zero sum.`);
+    }
+
     if (!spec.isSatisfiedBy(scores.scoredPlayerIds)) {
       throw new RangeError('Scores must satisfies ChipScoreTableSpecification');
     }

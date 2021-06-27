@@ -34,14 +34,6 @@ export default class PlayerChipScores implements Iterable<PlayerChipScore> {
   }
 
   public constructor(scores: Iterable<PlayerChipScore>) {
-    const totalChipCount = Array.from(scores)
-      .map((score) => score.count)
-      .reduce((a, b) => a.add(b));
-
-    if (!totalChipCount.equals(new ChipCount(0))) {
-      throw new Error(`ChipCounts must be zero sum.`);
-    }
-
     this.scores = new Map(
       Array.from(scores).map((score) => [score.playerId.toString(), score]),
     );
