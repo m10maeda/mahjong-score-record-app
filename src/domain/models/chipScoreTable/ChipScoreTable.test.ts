@@ -1,8 +1,9 @@
+import { EntryPlayers } from '../entryPlayerList';
 import { PlayerId } from '../player';
 import { ChipCount } from '../score';
 import ChipScoreTable from './ChipScoreTable';
 import ChipScoreTableId from './ChipScoreTableId';
-import ChipScoreTableMinSpecification from './ChipScoreTableMinSpecification';
+import ChipScoreTableSpecification from './ChipScoreTableSpecification';
 import PlayerChipScore from './PlayerChipScore';
 import PlayerChipScores from './PlayerChipScores';
 
@@ -14,8 +15,18 @@ describe('不正な値で生成しようとするとエラーを投げる', () =
         new ChipScoreTableId('0'),
         new PlayerChipScores([
           new PlayerChipScore(new PlayerId('0'), new ChipCount(0)),
+          new PlayerChipScore(new PlayerId('1'), new ChipCount(0)),
+          new PlayerChipScore(new PlayerId('2'), new ChipCount(0)),
+          new PlayerChipScore(new PlayerId('3'), new ChipCount(0)),
         ]),
-        ChipScoreTableMinSpecification.FourPlayers,
+        new ChipScoreTableSpecification(
+          new EntryPlayers([
+            new PlayerId('10'),
+            new PlayerId('11'),
+            new PlayerId('12'),
+            new PlayerId('13'),
+          ]),
+        ),
       );
     }).toThrowError();
   });
@@ -30,7 +41,14 @@ describe('equals メソッドが正しく比較する', () => {
       new PlayerChipScore(new PlayerId('2'), new ChipCount(0)),
       new PlayerChipScore(new PlayerId('3'), new ChipCount(0)),
     ]),
-    ChipScoreTableMinSpecification.FourPlayers,
+    new ChipScoreTableSpecification(
+      new EntryPlayers([
+        new PlayerId('0'),
+        new PlayerId('1'),
+        new PlayerId('2'),
+        new PlayerId('3'),
+      ]),
+    ),
   );
 
   test('ID が同一の場合、true を返す', () => {
@@ -42,7 +60,14 @@ describe('equals メソッドが正しく比較する', () => {
         new PlayerChipScore(new PlayerId('12'), new ChipCount(0)),
         new PlayerChipScore(new PlayerId('13'), new ChipCount(0)),
       ]),
-      ChipScoreTableMinSpecification.FourPlayers,
+      new ChipScoreTableSpecification(
+        new EntryPlayers([
+          new PlayerId('10'),
+          new PlayerId('11'),
+          new PlayerId('12'),
+          new PlayerId('13'),
+        ]),
+      ),
     );
 
     expect(table.equals(other)).toBe(true);
@@ -57,7 +82,14 @@ describe('equals メソッドが正しく比較する', () => {
         new PlayerChipScore(new PlayerId('2'), new ChipCount(0)),
         new PlayerChipScore(new PlayerId('3'), new ChipCount(0)),
       ]),
-      ChipScoreTableMinSpecification.FourPlayers,
+      new ChipScoreTableSpecification(
+        new EntryPlayers([
+          new PlayerId('0'),
+          new PlayerId('1'),
+          new PlayerId('2'),
+          new PlayerId('3'),
+        ]),
+      ),
     );
 
     expect(table.equals(other)).toBe(false);
