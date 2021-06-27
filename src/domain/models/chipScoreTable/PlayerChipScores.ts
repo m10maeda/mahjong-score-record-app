@@ -17,7 +17,7 @@ export default class PlayerChipScores implements Iterable<PlayerChipScore> {
       .reduce((a, b) => a.add(b));
   }
 
-  public get playerIds(): Iterable<PlayerId> {
+  public get scoredPlayerIds(): Iterable<PlayerId> {
     return Array.from(this.scores.values()).map((score) => score.playerId);
   }
 
