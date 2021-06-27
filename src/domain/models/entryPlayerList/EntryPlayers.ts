@@ -14,6 +14,10 @@ export default class EntryPlayers implements Iterable<PlayerId> {
     return this.ids.values();
   }
 
+  public equals(other: EntryPlayers): boolean {
+    return this.count.equals(other.count) && this.containsAll(other);
+  }
+
   public contains(id: PlayerId): boolean {
     return this.ids.has(id.toString());
   }
