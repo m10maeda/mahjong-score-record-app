@@ -4,6 +4,8 @@ import { EntryPlayerListEventPublisher } from './EntryPlayerListEvent';
 import EntryPlayerListId from './EntryPlayerListId';
 import EntryPlayerListMinSpecification from './EntryPlayerListMinSpecification';
 import EntryPlayers from './EntryPlayers';
+import RemovableEntryPlayerSpecification from './RemovableEntryPlayerSpecification';
+import ScoredPlayers from './ScoredPlayers';
 
 test('count プロパティが期待した値を返す', () => {
   const id = new EntryPlayerListId('0');
@@ -188,6 +190,9 @@ describe('remove メソッド', () => {
     ];
     const players = new EntryPlayers(values);
     const minSpec = EntryPlayerListMinSpecification.FourPlayers;
+    const removableSpec = new RemovableEntryPlayerSpecification(
+      new ScoredPlayers([]),
+    );
     const publisher = new EntryPlayerListEventPublisher();
 
     const entryPlayerList = new EntryPlayerList(
@@ -198,7 +203,7 @@ describe('remove メソッド', () => {
     );
 
     const target = new Player(new PlayerId('1'), new PlayerName('Bob'));
-    entryPlayerList.remove(target);
+    entryPlayerList.remove(target, removableSpec);
 
     expect(
       entryPlayerList.count.equals(new PlayerCount(values.length - 1)),
@@ -206,29 +211,60 @@ describe('remove メソッド', () => {
     expect(entryPlayerList.contains(target)).toBe(false);
   });
 
-  test('仕様を満たさない場合、エラーを投げて更新されない', () => {
-    const values = [
-      new PlayerId('0'),
-      new PlayerId('1'),
-      new PlayerId('2'),
-      new PlayerId('3'),
-    ];
-    const players = new EntryPlayers(values);
+  describe('仕様を満たさない場合、エラーを投げて更新されない', () => {
     const minSpec = EntryPlayerListMinSpecification.FourPlayers;
     const publisher = new EntryPlayerListEventPublisher();
 
-    const entryPlayerList = new EntryPlayerList(
-      id,
-      players,
-      minSpec,
-      publisher,
-    );
+    test('削除すると最小人数を下回る場合', () => {
+      const players = new EntryPlayers([
+        new PlayerId('0'),
+        new PlayerId('1'),
+        new PlayerId('2'),
+        new PlayerId('3'),
+      ]);
+      const removableSpec = new RemovableEntryPlayerSpecification(
+        new ScoredPlayers([]),
+      );
 
-    const target = new Player(new PlayerId('1'), new PlayerName('Bob'));
+      const entryPlayerList = new EntryPlayerList(
+        id,
+        players,
+        minSpec,
+        publisher,
+      );
 
-    expect(() => {
-      entryPlayerList.remove(target);
-    }).toThrowError();
+      const target = new Player(new PlayerId('1'), new PlayerName('Bob'));
+
+      expect(() => {
+        entryPlayerList.remove(target, removableSpec);
+      }).toThrowError();
+    });
+
+    test('成績を保持しているプレイヤーを削除しようとしている場合', () => {
+      const players = new EntryPlayers([
+        new PlayerId('0'),
+        new PlayerId('1'),
+        new PlayerId('2'),
+        new PlayerId('3'),
+        new PlayerId('4'),
+      ]);
+      const removableSpec = new RemovableEntryPlayerSpecification(
+        new ScoredPlayers(players),
+      );
+
+      const entryPlayerList = new EntryPlayerList(
+        id,
+        players,
+        minSpec,
+        publisher,
+      );
+
+      const target = new Player(new PlayerId('1'), new PlayerName('Bob'));
+
+      expect(() => {
+        entryPlayerList.remove(target, removableSpec);
+      }).toThrowError();
+    });
   });
 });
 

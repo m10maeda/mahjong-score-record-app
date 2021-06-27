@@ -8,6 +8,7 @@ import {
 import EntryPlayerListId from './EntryPlayerListId';
 import EntryPlayerListMinSpecification from './EntryPlayerListMinSpecification';
 import EntryPlayers from './EntryPlayers';
+import RemovableEntryPlayerSpecification from './RemovableEntryPlayerSpecification';
 
 export default class EntryPlayerList implements Iterable<PlayerId> {
   public readonly id: EntryPlayerListId;
@@ -50,12 +51,21 @@ export default class EntryPlayerList implements Iterable<PlayerId> {
     this.publisher.publish(new EntriedPlayerEvent(this.id, player.id));
   }
 
-  public remove(player: Player): void {
+  public remove(
+    player: Player,
+    removableSpec: RemovableEntryPlayerSpecification,
+  ): void {
     const newPlayers = this.players.remove(player.id);
 
     if (!this.minSpec.isSatisfiedBy(newPlayers)) {
       throw new RangeError(
         'Players must satisfies EntryPlayerListMinSpecification',
+      );
+    }
+
+    if (!removableSpec.isSatisfiedBy(player)) {
+      throw new RangeError(
+        'Player must satisfies RemovableEntryPlayerSpecification',
       );
     }
 
