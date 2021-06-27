@@ -1,4 +1,5 @@
-import { Player, PlayerCount, PlayerId, PlayerName } from '../player';
+import { Player, PlayerId, PlayerName } from '../player';
+import { PlayerCount } from '../playersRule';
 import EntryPlayerList from './EntryPlayerList';
 import { EntryPlayerListEventPublisher } from './EntryPlayerListEvent';
 import EntryPlayerListId from './EntryPlayerListId';

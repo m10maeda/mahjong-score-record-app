@@ -1,5 +1,4 @@
-import { PlayerCount } from '../../player';
-import { PlayersRuleType } from '../../playersRule';
+import { PlayerCount, PlayersRuleType } from '../../playersRule';
 import { Point } from '../../score';
 import PlayerScoredPoint from '../PlayerScoredPoint';
 import PlayerScoredPoints from '../PlayerScoredPoints';

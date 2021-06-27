@@ -1,4 +1,4 @@
-import { PlayerCount } from '../player';
+import PlayerCount from './PlayerCount';
 
 type Value = 3 | 4;
 
