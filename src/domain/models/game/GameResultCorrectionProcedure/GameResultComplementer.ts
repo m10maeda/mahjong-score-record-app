@@ -1,6 +1,6 @@
 import { EntryPlayerList } from '../../entryPlayerList';
-import { PlayerCount, PlayerId } from '../../player';
-import { PlayersRuleType } from '../../playersRule';
+import { PlayerId } from '../../player';
+import { PlayerCount, PlayersRuleType } from '../../playersRule';
 import { Point } from '../../score';
 import PlayerScoredPoint from '../PlayerScoredPoint';
 import PlayerScoredPoints from '../PlayerScoredPoints';

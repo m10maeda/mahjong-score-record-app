@@ -1,4 +1,5 @@
-import { PlayerCount, PlayerId } from '../player';
+import { PlayerId } from '../player';
+import { PlayerCount } from '../playersRule';
 
 type Key = ReturnType<PlayerId['toString']>;
 

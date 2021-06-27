@@ -1,4 +1,5 @@
-import { PlayerCount, PlayerId } from '../player';
+import { PlayerId } from '../player';
+import { PlayerCount } from '../playersRule';
 import EntryPlayers from './EntryPlayers';
 
 describe('期待した値を保持したモデルを生成する', () => {

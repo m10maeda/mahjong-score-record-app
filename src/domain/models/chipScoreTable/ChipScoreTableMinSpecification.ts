@@ -1,5 +1,4 @@
-import { PlayerCount } from '../player';
-import { PlayersRuleType } from '../playersRule';
+import { PlayerCount, PlayersRuleType } from '../playersRule';
 import PlayerChipScores from './PlayerChipScores';
 
 export default class ChipScoreTableMinSpecification {

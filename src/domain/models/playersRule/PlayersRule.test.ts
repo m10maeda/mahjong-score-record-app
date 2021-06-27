@@ -1,4 +1,4 @@
-import { PlayerCount } from '../player';
+import PlayerCount from './PlayerCount';
 import PlayersRule from './PlayersRule';
 import PlayersRuleId from './PlayersRuleId';
 import PlayersRuleType from './PlayersRuleType';
