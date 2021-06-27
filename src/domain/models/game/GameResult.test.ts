@@ -1,5 +1,6 @@
 import {
   EntryPlayerList,
+  EntryPlayerListEventPublisher,
   EntryPlayerListId,
   EntryPlayerListMinSpecification,
   EntryPlayers,
@@ -40,6 +41,7 @@ describe('不正な値で生成しようとするとエラーを投げる', () =
                 new PlayerId('3'),
               ]),
               EntryPlayerListMinSpecification.FourPlayers,
+              new EntryPlayerListEventPublisher(),
             ),
             PlayersRuleType.ThreePlayers,
           ),
@@ -70,6 +72,7 @@ describe('getPlayerGameScoreBy メソッド', () => {
             new PlayerId('3'),
           ]),
           EntryPlayerListMinSpecification.FourPlayers,
+          new EntryPlayerListEventPublisher(),
         ),
         PlayersRuleType.FourPlayers,
       ),
