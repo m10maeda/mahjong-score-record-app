@@ -1,6 +1,5 @@
 import { PlayerId } from '../player';
-import { Place, Point } from '../score';
-import GameScore from './GameScore';
+import { GameScore, Place, Point } from '../score';
 
 export default class PlayerGameScore {
   public readonly playerId: PlayerId;

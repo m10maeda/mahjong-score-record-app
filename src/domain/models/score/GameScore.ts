@@ -1,4 +1,5 @@
-import { Place, Point } from '../score';
+import Place from './Place';
+import Point from './Point';
 
 export default class GameScore {
   public readonly place: Place;
