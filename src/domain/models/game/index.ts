@@ -8,7 +8,6 @@ export {
   GameResultComplementer,
 } from './GameResultCorrectionProcedure';
 export { default as GameResultSizeSpecification } from './GameResultSizeSpecification';
-export { default as GameScore } from './GameScore';
 export { default as PlayerGameScore } from './PlayerGameScore';
 export { default as PlayerScoredPoint } from './PlayerScoredPoint';
 export { default as PlayerScoredPoints } from './PlayerScoredPoints';

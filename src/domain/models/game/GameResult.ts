@@ -1,8 +1,7 @@
 import { PlayerId } from '../player';
-import { Place, Point } from '../score';
+import { GameScore, Place, Point } from '../score';
 import GameResultCorrectionProcedure from './GameResultCorrectionProcedure';
 import GameResultSizeSpecification from './GameResultSizeSpecification';
-import GameScore from './GameScore';
 import PlayerGameScore from './PlayerGameScore';
 import PlayerScoredPoints from './PlayerScoredPoints';
 

@@ -7,14 +7,13 @@ import {
 } from '../entryPlayerList';
 import { PlayerId } from '../player';
 import { PlayersRuleType } from '../playersRule';
-import { Place, Point } from '../score';
+import { GameScore, Place, Point } from '../score';
 import GameResult from './GameResult';
 import GameResultCorrectionProcedure, {
   GameResultAdjuster,
   GameResultComplementer,
 } from './GameResultCorrectionProcedure';
 import GameResultSizeSpecification from './GameResultSizeSpecification';
-import GameScore from './GameScore';
 import PlayerGameScore from './PlayerGameScore';
 import PlayerScoredPoint from './PlayerScoredPoint';
 import PlayerScoredPoints from './PlayerScoredPoints';
